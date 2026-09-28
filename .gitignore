@@ -1,0 +1,9 @@
+# Operating system and sync-client files (blocked by the plugin directory)
+.DS_Store
+Thumbs.db
+desktop.ini
+__MACOSX/
+
+# Local build output
+*.zip
+node_modules/

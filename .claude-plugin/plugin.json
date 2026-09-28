@@ -1,0 +1,24 @@
+{
+  "name": "sitelemetry",
+  "displayName": "Sitelemetry",
+  "version": "0.1.0",
+  "description": "Audit websites you own or are authorized to test for security, technical SEO, AI visibility, analytics and tracking, accessibility and performance, then turn the findings into prioritized fixes and re-test them.",
+  "author": {
+    "name": "Sitelemetry",
+    "email": "support@sitelemetry.com",
+    "url": "https://sitelemetry.com"
+  },
+  "homepage": "https://sitelemetry.com/mcp-guide",
+  "repository": "https://github.com/egenil/sitelemetry-claude-plugin",
+  "license": "MIT",
+  "keywords": [
+    "website-audit",
+    "security-headers",
+    "seo",
+    "ai-visibility",
+    "accessibility",
+    "wcag",
+    "performance",
+    "core-web-vitals"
+  ]
+}

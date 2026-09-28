@@ -1,0 +1,17 @@
+{
+  "name": "sitelemetry",
+  "owner": {
+    "name": "Sitelemetry",
+    "email": "support@sitelemetry.com"
+  },
+  "description": "Sitelemetry plugin for Claude Code: website audits for sites you own or are authorized to test.",
+  "plugins": [
+    {
+      "name": "sitelemetry",
+      "source": "./",
+      "description": "Audit websites you own or are authorized to test for security, technical SEO, AI visibility, analytics and tracking, accessibility and performance, then turn the findings into prioritized fixes and re-test them.",
+      "category": "development",
+      "tags": ["website-audit", "security", "seo", "accessibility", "performance"]
+    }
+  ]
+}
