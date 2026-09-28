@@ -10,6 +10,7 @@
   },
   "homepage": "https://sitelemetry.com/mcp-guide",
   "repository": "https://github.com/egenil/sitelemetry-claude-plugin",
+  "privacyPolicyUrl": "https://sitelemetry.com/privacy",
   "license": "MIT",
   "keywords": [
     "website-audit",

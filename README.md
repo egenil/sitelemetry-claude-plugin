@@ -77,7 +77,7 @@ Depending on the account, security and full audits can send active, non-destruct
 - Sitelemetry audits the target from its own servers and returns findings to Claude. Audit usage is recorded in your Sitelemetry account.
 - Performance audits measure the target with Google PageSpeed Insights, so the target URL is sent to Google as part of the audit.
 - When your Sitelemetry workspace has a Google connection, SEO and full audits can add Search Console data for the target from that connection unless you ask Claude to leave it out.
-- The plugin itself stores nothing locally and downloads or installs no software. Skills may propose edits to your project's configuration files and suggest check commands such as `curl`, `dig`, `nslookup` or `nginx -t`. Claude applies or runs them only with your approval, and they contact only your own site and DNS. `scripts/validate.mjs` is a development check for this repository; the plugin never runs it.
+- The plugin itself stores nothing locally and downloads or installs no software. Skills may propose edits to your project's configuration files and suggest check commands such as `curl`, `dig`, `nslookup` or `nginx -t`. Claude applies or runs them only with your approval, and they contact only your own site and DNS.
 - Privacy policy: https://sitelemetry.com/privacy
 - Terms: https://sitelemetry.com/terms
 
@@ -86,16 +86,6 @@ Depending on the account, security and full audits can send active, non-destruct
 - Documentation: https://sitelemetry.com/mcp-guide
 - Support: https://sitelemetry.com/support
 - Website: https://sitelemetry.com
-
-## Development
-
-Run the repository checks with Node 18 or later (no dependencies):
-
-```text
-node scripts/validate.mjs
-```
-
-It checks the JSON files, the manifest, the MCP server URL, the skill frontmatter, file names, and the text for URLs outside the allowed list and for sales wording. It also rejects a maintainer's local list of extra terms, one per line, read from `.git/info/validate-deny.txt` or from `--deny-file <path>`; that list is never committed. Without a list the check fails; pass `--no-deny` to skip it on purpose.
 
 ## License
 

@@ -1,6 +1,6 @@
 # Stack snippets
 
-Starting points for common audit findings. Use only the parts that match a returned finding, adapt values to the site, and check the live response before and after (`curl -sI https://example.com/`). Platforms change their dashboards and defaults, so confirm against the current response rather than assuming.
+Starting points for common audit findings. Use only the parts that match a returned finding, adapt values to the site, and check the live response headers before and after (for example in the browser's developer tools, Network tab). Platforms change their dashboards and defaults, so confirm against the current response rather than assuming.
 
 The header values below are a conservative baseline:
 
