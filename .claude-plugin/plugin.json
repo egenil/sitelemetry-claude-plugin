@@ -1,7 +1,7 @@
 {
   "name": "sitelemetry",
   "displayName": "Sitelemetry",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Audit websites you own or are authorized to test for security, technical SEO, AI visibility, analytics and tracking, accessibility and performance, then turn the findings into prioritized fixes and re-test them.",
   "author": {
     "name": "Sitelemetry",
