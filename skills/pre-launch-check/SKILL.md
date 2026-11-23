@@ -34,7 +34,8 @@ For each audit:
 - On `action_required`, no audit ran and no allowance was used.
   - Access or allowance reasons: note it, relay the next step neutrally with the returned link, and continue with the other audits.
   - `target_verification_required` whose text says that the domain was not found or does not resolve in DNS: stop and ask the user to check the spelling of the target, because no audit can run on a hostname that does not exist.
-  - Other `target_verification_required`, `target_reverification_required` or `verified_target_required` results: record that audit as not measured, continue with the other audits, and follow the `domain-verification` skill afterwards.
+  - `target_reverification_required` or `verified_target_required`: stop, because the other audits need the same renewal or the verified spelling of the same target, and follow the `domain-verification` skill.
+  - Other `target_verification_required` results: record that audit as not measured, continue with the other audits, and follow the `domain-verification` skill afterwards.
   - `verification_scope_required`: only the host-wide security checks need broader proof. Record security as not measured, continue with the other audits, and point to the `domain-verification` skill for domain, hostname or root URL proof.
 - A `partial` security result that lists checks needing ownership verification still counts as run: report the public checks it measured, list the remaining checks as not measured, and point to the `domain-verification` skill.
 - On an error, note it and continue with the next audit.

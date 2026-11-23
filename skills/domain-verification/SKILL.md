@@ -58,11 +58,12 @@ Available when the workspace offers a Google connection and the user is a verifi
 
 ## 3. What verification covers
 
-- Without current ownership proof, an audit runs only public checks:
+- Without ownership proof, an audit runs only public checks:
   - the SEO, AI visibility, analytics and tracking, accessibility and performance audits included in the account's access;
   - the public security checks included in the account's access: DNS, email DNS, RDAP, TLS, HTTP headers, MITM posture and technology fingerprint, plus transport delivery where it is included.
 - A security or full audit without a `modules` list runs those public security checks on a target without proof and returns `partial`. `auditDetails.scope.verificationRequiredModules` lists the remaining included security checks that verification adds. On an account with security-only access, a full audit runs security only, and verification adds HTTP methods, exposed files and paths, and API exposure.
-- An explicit `modules` list runs without verification only if every module is a public check (`dns`, `dns-email`, `rdap`, `tls`, `http-headers`, `mitm-posture`, `tech-fingerprint`, `transport-delivery`) included in the account's access. Any other module needs current verification, and host-wide modules need host proof.
+- An explicit `modules` list on `audit_security` runs without verification only if every module is a public check (`dns`, `dns-email`, `rdap`, `tls`, `http-headers`, `mitm-posture`, `tech-fingerprint`, `transport-delivery`) included in the account's access. On an account with security-only access the same applies to `audit_full`, which runs security only; on other accounts an explicit `modules` list on `audit_full` needs current verification. Any other module needs current verification, and host-wide modules need host proof.
+- On accounts beyond security-only access, these public checks run while the workspace has no completed proof for the target: none was added, or verification is still pending. An expired proof, a verified proof for another spelling of the target, and a path-only proof for host-wide checks return their own reason from the table above; resolve that first.
 - Host-wide security checks need proof for the domain, the hostname or the root URL. A proof for a path prefix such as `https://example.com/shop/` covers only checks that work within that prefix.
 - Verification does not create a monitoring project. The first audit of a verified target creates one automatically when a project slot is free; audits without verification create none.
 - A proof stays current for 30 days after it was last checked. Keep the DNS record or file in place so it can be checked again.

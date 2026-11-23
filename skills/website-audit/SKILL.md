@@ -19,7 +19,7 @@ Use the Sitelemetry audit tools to measure a website and explain what to fix fir
 
 If the user started this skill with arguments, the first one is the target URL and an optional second word names the area: `security` (`audit_security`), `seo` (`audit_seo`), `ai` (`audit_ai_visibility`), `integrations` (`audit_integrations`), `accessibility` (`audit_accessibility`), `performance` (`audit_performance`) or `full` (`audit_full`). Confirm ownership or authorization as usual before calling. If only a URL was given and the conversation does not say which area, ask, or use `audit_full` if the user wants everything.
 
-`target` must be an absolute `https://` URL. Checks that need ownership verification use the target spelled exactly as it is verified in the user's Sitelemetry workspace.
+`target` must be an absolute `https://` URL. Use the spelling that is verified in the user's Sitelemetry workspace: checks that need ownership verification run only on that exact spelling, and on accounts beyond security-only access another spelling of a verified site returns `verified_target_required` for every audit.
 
 - Scheme, `www` or no `www`, port, path, path casing and query all count. Only hostname case, an explicit `:443` and a trailing slash are ignored.
 - Only public hosts are accepted: no localhost, private addresses, credentials in the URL or `#fragment`.

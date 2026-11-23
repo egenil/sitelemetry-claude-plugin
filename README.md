@@ -68,7 +68,8 @@ Depending on the account, security and full audits can send active, non-destruct
 ## How audits run
 
 - Long audits return `running` with a job ID. The skills poll the same tool until the result is final; polling does not start another audit or use more allowance.
-- When a prerequisite is missing (verification, access, allowance or authorization terms), or the target's domain does not resolve in DNS, the tool returns `action_required` before any audit runs, and nothing is used. The skills explain the next step and give the link the tool returns.
+- When a prerequisite is missing (verification, access, allowance or authorization terms), the tool returns `action_required` before any audit runs, and nothing is used. The skills explain the next step and give the link the tool returns.
+- When a target without ownership verification does not resolve in DNS, the same kind of answer says that the domain was not found, for every audit that would otherwise ask for verification and, on accounts beyond security-only access, for every audit without proof. On an account with security-only access, the public checks that run without verification, such as a default security audit, still run on such a target.
 - Results that could not measure everything are marked `partial`, and the skills report what was not measured instead of estimating it.
 
 ## Data and privacy
