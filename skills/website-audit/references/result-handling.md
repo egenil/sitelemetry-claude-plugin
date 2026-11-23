@@ -30,7 +30,7 @@ No audit ran and no allowance was used (`auditExecuted: false`, `usageConsumed: 
 | `reason` | `nextAction.type` | Meaning and next step |
 |---|---|---|
 | `entitlement_required` | `review_workspace_access` | The requested audit, security profile or module is not included in the connected account. `entitlement` names the current access and the access it needs. State this neutrally. If the user wants, run an audit, profile or module that is included instead. |
-| `target_verification_required` | `verify_target` | The exact target has no ownership proof in the workspace. Use the `domain-verification` skill. |
+| `target_verification_required` | `verify_target` | The exact target has no ownership proof in the workspace. Use the `domain-verification` skill. If the text says that the domain was not found or does not resolve in DNS, the hostname does not exist: ask the user to check the spelling of the target instead of verifying it. |
 | `target_reverification_required` | `renew_verification` | The ownership proof has expired. Use the `domain-verification` skill. |
 | `verified_target_required` | `review_verified_target` | The target spelling differs from the verified one. `registeredTarget` shows the verified spelling. Show both and ask the user which one to audit before using it. |
 | `verification_scope_required` | `verify_host` | A URL-prefix proof cannot authorize host-wide security checks. Use the `domain-verification` skill. |
@@ -68,6 +68,11 @@ Errors come back with `isError` and text starting `Error:`.
 
 If the connection itself is refused as unauthorized, the user needs to connect or reconnect the Sitelemetry connector and sign in. If requests are rate limited, slow down and try again shortly.
 
-## Security checks on accounts with security-only access
+## Audits without ownership proof
 
-Without current ownership proof, a default `audit_security` call (no `profile` or `modules`) on such an account, or a default `audit_full`, which on such an account runs security only, runs seven public checks: DNS, email DNS, RDAP, TLS, HTTP headers, MITM posture and technology fingerprint. It returns `partial` and names the three further checks that verification adds: HTTP methods, exposed files and paths, and API exposure. Present the measured results and the verification step. Do not claim the other checks ran. An explicit `modules` list runs without verification only if every module is one of those seven public checks (`dns`, `dns-email`, `rdap`, `tls`, `http-headers`, `mitm-posture`, `tech-fingerprint`). Any other module needs current verification, and host-wide modules need host proof. On other accounts, every audit needs current verification, including the public checks.
+Without current ownership proof, an audit runs only public checks. The SEO, AI visibility, analytics and tracking, accessibility and performance audits run as usual when they are included in the connected account's access. A security or full audit without a `modules` list runs the public security checks included in the account's access and returns `partial`: `auditDetails.scope.verificationRequiredModules` names the remaining included security checks that verification adds, and the result text includes the verification step. Present the measured results and the verification step. Do not claim the other checks ran.
+
+- The public security checks are DNS, email DNS, RDAP, TLS, HTTP headers, MITM posture and technology fingerprint, plus transport delivery where it is included.
+- On an account with security-only access, `audit_full` runs security only. Its seven public checks run without proof, and verification adds HTTP methods, exposed files and paths, and API exposure.
+- An explicit `modules` list runs without verification only if every module is a public check (`dns`, `dns-email`, `rdap`, `tls`, `http-headers`, `mitm-posture`, `tech-fingerprint`, `transport-delivery`). Any other module needs current verification, and host-wide modules need host proof.
+- A target whose domain does not resolve in DNS returns `action_required` before any audit runs, and nothing is used. Ask the user to check the spelling of the target.

@@ -19,7 +19,7 @@ Use the Sitelemetry audit tools to measure a website and explain what to fix fir
 
 If the user started this skill with arguments, the first one is the target URL and an optional second word names the area: `security` (`audit_security`), `seo` (`audit_seo`), `ai` (`audit_ai_visibility`), `integrations` (`audit_integrations`), `accessibility` (`audit_accessibility`), `performance` (`audit_performance`) or `full` (`audit_full`). Confirm ownership or authorization as usual before calling. If only a URL was given and the conversation does not say which area, ask, or use `audit_full` if the user wants everything.
 
-`target` must be an absolute `https://` URL spelled exactly as it is verified in the user's Sitelemetry workspace.
+`target` must be an absolute `https://` URL. Checks that need ownership verification use the target spelled exactly as it is verified in the user's Sitelemetry workspace.
 
 - Scheme, `www` or no `www`, port, path, path casing and query all count. Only hostname case, an explicit `:443` and a trailing slash are ignored.
 - Only public hosts are accepted: no localhost, private addresses, credentials in the URL or `#fragment`.
@@ -50,7 +50,7 @@ Read `status` first. Every reason and error is described in [result handling](re
 
 - `completed` or `partial`: present the result (section 4). `partial` means some requested measurements were unavailable.
 - `running`: the audit is still in progress. Tell the user in one line, wait about `retryAfterMs`, then call the **same tool** with `pollArguments` exactly as returned. Do not add scan options. Repeat until the status is final. Polling resumes the same audit; it does not start a new one or use more allowance. Full and security audits can take several minutes. Never present `running` as a result and never start a replacement audit.
-- `action_required`: no audit ran and no allowance was used. Explain the `reason` and pass on `nextAction.url` exactly as returned. Do not retry until the prerequisite has changed. For verification reasons, follow the `domain-verification` skill.
+- `action_required`: no audit ran and no allowance was used. Explain the `reason` and pass on `nextAction.url` exactly as returned. Do not retry until the prerequisite has changed. For verification reasons, follow the `domain-verification` skill. If the text says that the domain was not found or does not resolve in DNS, ask the user to check the spelling of the target instead.
 - Error (`isError` with text starting `Error:`): relay the message plainly and suggest the correction it points to, such as the exact verified target spelling or a narrower scope.
 
 ## 4. Present the findings

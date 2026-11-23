@@ -22,6 +22,8 @@ description: Explain and help complete Sitelemetry ownership verification when a
 | `verified_target_required` | `review_verified_target` | The target spelling differs from the verified one; `registeredTarget` shows the verified spelling | Show both spellings and ask the user which one to audit. Use `registeredTarget` only after they confirm, or verify the other spelling |
 | `verification_scope_required` | `verify_host` | A URL-prefix proof cannot authorize host-wide security checks | Verify the domain, the hostname or the root URL, or run only checks that the verified prefix covers |
 
+When a `target_verification_required` result says that the domain was not found or does not resolve in DNS, verification cannot help yet because the hostname does not exist. Check the spelling of the target with the user. If the domain is new, wait until its DNS records are published, then retry with the exact target.
+
 Targets are matched exactly. `https://example.com/` and `https://www.example.com/` are different targets, and so are different ports and paths. Verify the spelling the user wants to audit.
 
 ## 2. Verification methods
@@ -56,10 +58,13 @@ Available when the workspace offers a Google connection and the user is a verifi
 
 ## 3. What verification covers
 
+- Without current ownership proof, an audit runs only public checks:
+  - the SEO, AI visibility, analytics and tracking, accessibility and performance audits included in the account's access;
+  - the public security checks included in the account's access: DNS, email DNS, RDAP, TLS, HTTP headers, MITM posture and technology fingerprint, plus transport delivery where it is included.
+- A security or full audit without a `modules` list runs those public security checks on a target without proof and returns `partial`. `auditDetails.scope.verificationRequiredModules` lists the remaining included security checks that verification adds. On an account with security-only access, a full audit runs security only, and verification adds HTTP methods, exposed files and paths, and API exposure.
+- An explicit `modules` list runs without verification only if every module is a public check (`dns`, `dns-email`, `rdap`, `tls`, `http-headers`, `mitm-posture`, `tech-fingerprint`, `transport-delivery`) included in the account's access. Any other module needs current verification, and host-wide modules need host proof.
 - Host-wide security checks need proof for the domain, the hostname or the root URL. A proof for a path prefix such as `https://example.com/shop/` covers only checks that work within that prefix.
-- On an account with security-only access, a default `audit_security` call (or a default `audit_full`, which on such an account runs security only) runs seven public checks without verification: DNS, email DNS, RDAP, TLS, HTTP headers, MITM posture and technology fingerprint. Verification adds checks for HTTP methods, exposed files and paths, and API exposure. An explicit `modules` list runs without verification only if every module is one of those seven public checks (`dns`, `dns-email`, `rdap`, `tls`, `http-headers`, `mitm-posture`, `tech-fingerprint`). Any other module needs current verification, and host-wide modules need host proof.
-- On other accounts, every audit needs current verification of the exact target, including the public checks.
-- Verification does not create a monitoring project. The first accepted audit creates one automatically.
+- Verification does not create a monitoring project. The first audit of a verified target creates one automatically when a project slot is free; audits without verification create none.
 - A proof stays current for 30 days after it was last checked. Keep the DNS record or file in place so it can be checked again.
 
 ## 4. Retry

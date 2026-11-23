@@ -61,14 +61,14 @@ Claude also uses the skills automatically when a request matches them.
 
 ## Authorization
 
-Only audit websites you own or are explicitly authorized to test. The skills ask for confirmation when this is unclear and do not audit third-party sites. Sitelemetry requires ownership verification of the exact target in your workspace before most audits run.
+Only audit websites you own or are explicitly authorized to test. The skills ask for confirmation when this is unclear and do not audit third-party sites. Without ownership verification of the exact target in your workspace, Sitelemetry runs only public checks: the SEO, AI visibility, analytics and tracking, accessibility and performance audits included in your account and the public security checks. The remaining security checks run after verification.
 
 Depending on the account, security and full audits can send active, non-destructive test requests to the site, for example port and injection probes. Run them only on sites you are authorized to test, and expect them to show up in server logs or firewall alerts.
 
 ## How audits run
 
 - Long audits return `running` with a job ID. The skills poll the same tool until the result is final; polling does not start another audit or use more allowance.
-- When a prerequisite is missing (verification, access, allowance or authorization terms), the tool returns `action_required` before any audit runs, and nothing is used. The skills explain the next step and give the link the tool returns.
+- When a prerequisite is missing (verification, access, allowance or authorization terms), or the target's domain does not resolve in DNS, the tool returns `action_required` before any audit runs, and nothing is used. The skills explain the next step and give the link the tool returns.
 - Results that could not measure everything are marked `partial`, and the skills report what was not measured instead of estimating it.
 
 ## Data and privacy
